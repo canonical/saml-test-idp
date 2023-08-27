@@ -6,7 +6,7 @@ setup(
     name="saml_test_helper",
     version="0.1.0",
     description="Companion saml_test_helper library for saml-test-idp",
-    url="https://github.com/weiiwang01/saml-test-idp",
+    url="https://github.com/canonical/saml-test-idp",
     author="Weii Wang",
     author_email="weii.wang@canonical.com",
     packages=["saml_test_helper"],

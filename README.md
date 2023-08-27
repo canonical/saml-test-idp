@@ -15,7 +15,7 @@ Python library to streamline testing for SAML service providers.
 To install the companion Python helper library, use the following command.
 
 ```bash
-pip install git+https://github.com/weiiwang01/saml-test-idp.git
+pip install git+https://github.com/canonical/saml-test-idp.git
 ```
 
 The SAML test IdP server is distributed via a Docker image. Deployment is
