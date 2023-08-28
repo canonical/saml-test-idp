@@ -1,10 +1,11 @@
 import base64
+import dataclasses
 import logging
 import time
 import urllib.parse
 import zlib
 from pathlib import Path
-from typing import List, Optional
+from typing import Dict, List, Optional
 from xml.etree import ElementTree
 
 import kubernetes
@@ -13,6 +14,19 @@ import requests
 __all__ = ["SamlK8sTestHelper"]
 
 logger = logging.getLogger("saml_test_helper")
+
+
+@dataclasses.dataclass
+class SamlResponseHttpPost:
+    """Represent a SAML response transmitted via the HTTP-POST binding.
+
+    :ivar url: Service provider's endpoint to receive the SAML assertion.
+    :ivar data: Dictionary containing the HTML form data for the SAML response.
+    """
+
+    url: str
+    data: Dict[str, str]
+    binding: str = "HTTP-POST"
 
 
 class SamlK8sTestHelper:
@@ -222,9 +236,9 @@ class SamlK8sTestHelper:
         )
         response.raise_for_status()
 
-    def sso_login(
+    def redirect_sso_login(
         self, redirect_url: str, username: str = "ubuntu", password: str = "ubuntu"
-    ) -> requests.Request:
+    ) -> SamlResponseHttpPost:
         """Execute identity provider steps of SSO login process.
 
         This method runs the identity provider steps of SSO login process during the service
@@ -232,14 +246,14 @@ class SamlK8sTestHelper:
         users for authentication with the identity provider. You can obtain this URL by initiating
         a login request on the service provider's website.
 
-        After executing all identity provider steps, this method returns a ``requests.Request``
-        instance. This object encapsulates the SAML assertion, which should be sent back to the
-        service provider to complete the SSO process.
+        After executing all identity provider steps, this method returns a
+        ``SamlResponseHttpPost`` instance. This object encapsulates the SAML assertion, which
+        should be sent back to the service provider to complete the SSO process.
 
         :param redirect_url: URL where the service provider redirects for IdP authentication.
         :param username: Username for SSO login, defaulting to "ubuntu".
         :param password: Password for SSO login, defaulting to "ubuntu".
-        :return: A ``requests.Request`` object encapsulating the SAML assertion.
+        :return: A ``SamlResponseHttpPost`` object encapsulating the SAML response.
         """
         url = urllib.parse.urlparse(redirect_url)
         if url.netloc != self.SAML_HOST:
@@ -274,4 +288,4 @@ class SamlK8sTestHelper:
             for node in tree.iter("input")
             if "name" in node.attrib and "value" in node.attrib
         }
-        return requests.Request(method="POST", url=post_url, data=inputs)
+        return SamlResponseHttpPost(url=post_url, data=inputs)

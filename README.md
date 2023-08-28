@@ -56,8 +56,7 @@ XML.
 
 ```python
 saml_helper.register_service_provider(
-    name="synapse.local",
-    metadata=service_provider_metadata
+    name="synapse.local", metadata=service_provider_metadata
 )
 ```
 
@@ -69,17 +68,15 @@ across service providers, it should result in a redirection to the SAML test IdP
 for SSO login. Capture the redirection URL, then pass it to the helper.
 
 Here, the helper completes all steps on the IdP side and returns
-a `requests.Request` object holding the assertion. You can then inspect, modify,
-or relay this request to the service provider to finalize the login.
+a `SamlResponseHttpPost` object holding the assertion. You can then inspect,
+modify, or relay this response to the service provider to finalize the login.
 
 ```python
-next_request = saml_helper.sso_login(redirect_url)
-assert "https://synapse.local" in next_request.url
+saml_response = saml_helper.redirect_sso_login(redirect_url)
+assert "https://synapse.local" in saml_response.url
 
-next_request.url = next_request.url.replace(
-    "https://synapse.local",
-    f"http://{ip}:8080"
+url = saml_response.url.replace("https://synapse.local", f"http://{ip}:8080")
+logged_in_page = requests.post(
+    url, data=saml_response.data, headers={"Host": "synapse.local"}
 )
-next_request.headers["Host"] = "synapse.local"
-logged_in_page = session.send(next_request.prepare())
 ```
