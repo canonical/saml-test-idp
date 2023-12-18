@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/crewjam/saml v0.4.13
-	golang.org/x/crypto v0.12.0
+	golang.org/x/crypto v0.17.0
 )
 
 require (
