@@ -8,9 +8,10 @@ import (
 	"embed"
 	"encoding/pem"
 	"fmt"
-	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"net/url"
+
+	"golang.org/x/crypto/bcrypt"
 
 	"github.com/crewjam/saml/logger"
 	"github.com/crewjam/saml/samlidp"
@@ -77,7 +78,7 @@ func main() {
 	err = idpServer.Store.Put("/users/ubuntu", samlidp.User{
 		Name:           "ubuntu",
 		HashedPassword: hashedPassword,
-		Email:          "ubuntu@saml.caonical.test",
+		Email:          "ubuntu@saml.canonical.test",
 	})
 	if err != nil {
 		logr.Fatalf("%s", err)
