@@ -41,8 +41,8 @@ github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=
 github.com/stretchr/testify v1.8.1 h1:w7B6lhMri9wdJUVmEZPGGhZzrYTPvgJArz7wNPgYKsk=
 github.com/stretchr/testify v1.8.1/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o6fzry7u4=
-github.com/weiiwang01/saml v0.0.0-20230826085246-5ac2afa0b4ea h1:ATVsqEazzbKP9XjNbB32TSoAwQs1w+df53Oku5UvJ5Y=
-github.com/weiiwang01/saml v0.0.0-20230826085246-5ac2afa0b4ea/go.mod h1:xEnRcdf/8o5XVm9+PQ9wUsP/6SbsFzHlLb9FBSHPIfI=
+github.com/weiiwang01/saml v0.0.0-20240308115711-0d63b219ebe9 h1:iye2MEbvO+X2jX8Y5kPDUWFurAsMQ8JflM7jVLsmoaY=
+github.com/weiiwang01/saml v0.0.0-20240308115711-0d63b219ebe9/go.mod h1:xEnRcdf/8o5XVm9+PQ9wUsP/6SbsFzHlLb9FBSHPIfI=
 github.com/zenazn/goji v1.0.1 h1:4lbD8Mx2h7IvloP7r2C0D6ltZP6Ufip8Hn0wmSK5LR8=
 github.com/zenazn/goji v1.0.1/go.mod h1:7S9M489iMyHBNxwZnk9/EHS098H4/F6TATF2mIxtB1Q=
 golang.org/x/crypto v0.0.0-20220128200615-198e4374d7ed/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=

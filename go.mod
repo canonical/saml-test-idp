@@ -15,4 +15,4 @@ require (
 	github.com/zenazn/goji v1.0.1 // indirect
 )
 
-replace github.com/crewjam/saml => github.com/weiiwang01/saml v0.0.0-20230826085246-5ac2afa0b4ea
+replace github.com/crewjam/saml => github.com/weiiwang01/saml v0.0.0-20240308115711-0d63b219ebe9

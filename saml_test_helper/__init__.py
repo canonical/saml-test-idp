@@ -182,7 +182,7 @@ class SamlK8sTestHelper:
         namespace: str,
         kube_config: Optional[str] = None,
         timeout: int = 300,
-        image="ghcr.io/canonical/saml-test-idp:0.1.0",
+        image="ghcr.io/canonical/saml-test-idp:0.1.1",
     ) -> "SamlK8sTestHelper":
         """Deploy a SAML test IdP in Kubernetes and return the helper instance.
 
