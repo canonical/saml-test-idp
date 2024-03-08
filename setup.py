@@ -4,7 +4,7 @@ requirements = ["kubernetes", "requests"]
 
 setup(
     name="saml_test_helper",
-    version="0.1.0",
+    version="0.1.1",
     description="Companion saml_test_helper library for saml-test-idp",
     url="https://github.com/canonical/saml-test-idp",
     author="Weii Wang",
