@@ -32,6 +32,9 @@ class SamlResponseHttpPost:
 class SamlK8sTestHelper:
     CERTIFICATE = (Path(__file__).parent / "certs/certificate.pem").read_text()
     CERTIFICATE_HASH = "30be696d"
+    DEFAULT_EMAIL = "ubuntu@saml.canonical.test"
+    DEFAULT_USERNAME = "ubuntu"
+    DEFAULT_PASSWORD = "ubuntu"
     SAML_HOST = "saml.canonical.test"
 
     def __init__(self, idp_address: str, kube_config: Optional[str] = None):
@@ -182,7 +185,7 @@ class SamlK8sTestHelper:
         namespace: str,
         kube_config: Optional[str] = None,
         timeout: int = 300,
-        image="ghcr.io/canonical/saml-test-idp:0.1.1",
+        image="ghcr.io/canonical/saml-test-idp:0.2.0",
     ) -> "SamlK8sTestHelper":
         """Deploy a SAML test IdP in Kubernetes and return the helper instance.
 
@@ -236,8 +239,22 @@ class SamlK8sTestHelper:
         )
         response.raise_for_status()
 
+    def register_user(self, username: str, email: str, password: str):
+        """Register a user within the SAML test IdP, overwrite if exists.
+
+        :param username: Unique identifier for the user in the SAML test IdP.
+        :param email: Email address of the user.
+        :param password: Password of the user.
+        """
+        response = requests.put(
+            f"http://{self._idp_address}/users/{username}",
+            json={"email": email, "password": password},
+            timeout=10,
+        )
+        response.raise_for_status()
+
     def redirect_sso_login(
-        self, redirect_url: str, username: str = "ubuntu", password: str = "ubuntu"
+        self, redirect_url: str, username: str = DEFAULT_USERNAME, password: str = DEFAULT_PASSWORD
     ) -> SamlResponseHttpPost:
         """Execute identity provider steps of SSO login process.
 
@@ -271,7 +288,7 @@ class SamlK8sTestHelper:
                 "user": username,
                 "password": password,
                 "SAMLRequest": base64.b64encode(saml_request).decode("ascii"),
-                "RelayState": query["RelayState"],
+                "RelayState": query.get("RelayState", ""),
             },
             timeout=10,
         )
@@ -286,6 +303,6 @@ class SamlK8sTestHelper:
         inputs = {
             node.attrib["name"]: node.attrib["value"]
             for node in tree.iter("input")
-            if "name" in node.attrib and "value" in node.attrib
+            if "name" in node.attrib and "value" in node.attrib and node.attrib["value"]
         }
         return SamlResponseHttpPost(url=post_url, data=inputs)
